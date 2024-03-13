@@ -70,7 +70,8 @@ require("dotenv").config();
 // module.exports = query;
 
 const userDetailsFetch = async (req, res, query) => {
-  let userName = req.url.replace("/", "");
+  let userName = req.params.username;
+  console.log(userName);
   let limit = req.query.limit;
   var data = await fetch("https://leetcode.com/graphql", {
     method: "POST",
@@ -95,14 +96,10 @@ const userDetailsFetch = async (req, res, query) => {
 const express = require("express");
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("It'working");
-});
-
-app.get("/MADHVAN", async (req, res) => {
+app.get("/:username", async (req, res) => {
   try {
     const data = await userDetailsFetch(req, res, newquery);
-    // console.log(data);
+    console.log(data);
     for (let key in data.matchedUser) {
       console.log(key);
       if (key == "submitStats") console.log(data.matchedUser.submitStats);
@@ -114,6 +111,7 @@ app.get("/MADHVAN", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(port);
