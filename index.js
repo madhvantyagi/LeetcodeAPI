@@ -96,6 +96,17 @@ const userDetailsFetch = async (req, res, query) => {
 const express = require("express");
 const app = express();
 
+app.use(
+  cors({
+    origin: "*", // Allow requests from any origin
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allowed request headers
+    exposedHeaders: ["Content-Length", "Authorization"], // Headers exposed to the client
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+    optionsSuccessStatus: 200, // Set the HTTP status code for successful OPTIONS requests
+  })
+);
+
 app.get("/:username", async (req, res) => {
   try {
     const data = await userDetailsFetch(req, res, newquery);
