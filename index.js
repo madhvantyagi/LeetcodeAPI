@@ -66,6 +66,7 @@ const newquery = `query getUserProfile($username: String!) {
     }
 }`;
 const cors = require("cors");
+require("dotenv").config();
 // module.exports = query;
 
 const userDetailsFetch = async (req, res, query) => {
@@ -113,7 +114,7 @@ app.get("/MADHVAN", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
-app.listen(5000, () => {
-  console.log();
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(port);
 });
